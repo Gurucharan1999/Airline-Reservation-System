@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% extends 'base.html' %}
+{% block title %}Login{% endblock %}
 {% block body_block %}
 <div class="form-group jumbotron">
   <form action="{% url 'airline3app:user_login' %}" method="post">

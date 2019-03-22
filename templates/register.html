@@ -1,58 +1,26 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-    {% load bootstrap4 %}
-    {% bootstrap_css %}
-    {% bootstrap_javascript jquery='full' %}
-    {{ user_form.media }}
-    {{ profile_form.media }}
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="{% url 'base' %}">DJANGO</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="{% url 'admin:index' %}">Admin<span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'airline3app:register' %}">Register</a>
-      </li>
-      {% if user.is_authenticated %}
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'user_logout' %}">Logout</a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link">  Hello, {{ user.username }} </a>
-      </li>
-      {% else %}
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'airline3app:user_login' %}">Login</a>
-      </li>
-        {% endif %}
-      </div>
-      </nav>
-    <div class = 'container jumbotron'>
-      {% if registered %}
-        <h1>Thank You!</h1>
-      {% else %}
-        <h1>Register Here:</h1>
-        <h3>Fill out the form:</h3>
-
-        <form enctype="multipart/form-data" method="post">
-          {% csrf_token %}
-          {% bootstrap_form user_form %}
-          {% bootstrap_form profile_form %}
-          <input class='btn btn-primary' type='submit' value="Register"></input>
-        </form>
-      {% endif %}
-    </div>
-  </body>
-</html>
+{% extends 'base.html' %}
+{% block title %}Register{% endblock %}
+{% block links_n_scripts %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+{{ user_form.media }}
+{{ profile_form.media }}
+{% endblock %}
+{% block body_block %}
+<div class = 'jumbotron'>
+  {% if registered %}
+    <h1>Thank You!</h1>
+  {% else %}
+    <h1>Register Here:</h1>
+    <h3>Fill out the form:</h3>
+    <form enctype="multipart/form-data" method="post">
+      {% csrf_token %}
+      {% bootstrap_form user_form %}
+      {% bootstrap_form profile_form %}
+      <input class='btn btn-primary' type='submit' value="Register"></input>
+    </form>
+  {% endif %}
+</div>
+{% endblock %}

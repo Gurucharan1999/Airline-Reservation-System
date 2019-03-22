@@ -25,7 +25,6 @@ class FlightDetail(models.Model):
         return reverse("plane_detail_book",kwargs={'pk': self.pk})
 
 class UserProfileInfo(models.Model):
-
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     profile_pic = models.ImageField(upload_to='profile_pics',blank=True)
 
