@@ -18,7 +18,7 @@ class Route(models.Model):
     route_src = models.CharField(max_length = 100)
 
 class FlightDetail(models.Model):
-    flight_no = models.CharField(max_length = 100,)
+    flight_no = models.CharField(max_length = 100)
     route = models.CharField(max_length = 100)
 
     def get_absolute_url(self):
