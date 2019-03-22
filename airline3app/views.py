@@ -95,6 +95,9 @@ def passenger_info(request):
 def base(request):
     return render(request, 'base.html')
 
+def about(request):
+    return render(request, 'about.html')
+
 def register(request):
 
     registered = False
@@ -128,7 +131,7 @@ def register(request):
 @login_required
 def user_logout(request):
     logout(request)
-    return HttpResponseRedirect(reverse('base'))
+    return HttpResponseRedirect(reverse('about'))
 
 def user_login(request):
     if request.method == 'POST':
