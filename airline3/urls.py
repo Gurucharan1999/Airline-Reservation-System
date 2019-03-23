@@ -26,4 +26,8 @@ urlpatterns = [
     path('airline3app/',include('airline3app.urls')),
     path('index/',views.index,name='index'),
     path('logout/',views.user_logout,name='user_logout'),
+    path('payment/',views.payments_page,name='payments_page'),
+    path('congrats/',views.congrats,name='congrats'),
+    path('tickets/',views.ticket_list,name='ticket_list'),
+    path('tickets/<int:pk>/',views.my_tickets.as_view(),name='my_tickets'),
 ]
