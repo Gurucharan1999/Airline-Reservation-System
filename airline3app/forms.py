@@ -5,17 +5,10 @@ from airline3app.models import UserProfileInfo,Passengers
 
 
 class SearchForm(forms.Form):
-<<<<<<< HEAD
     source = forms.CharField(widget=forms.TextInput(attrs={'autocomplete': 'off'}))
     destination = forms.CharField(widget=forms.TextInput(attrs={'autocomplete': 'off'}))
     Date = forms.DateField(widget=forms.TextInput(attrs={'class':'datepicker','autocomplete': 'off'}))
     number_of_passengers = forms.CharField(widget=forms.TextInput(attrs={'autocomplete': 'off'}))
-=======
-   source = forms.CharField(widget=forms.TextInput(attrs={'autocomplete': 'off'}))
-   destination = forms.CharField(widget=forms.TextInput(attrs={'autocomplete': 'off'}))
-   Date = forms.DateField(widget=forms.TextInput(attrs={'class':'datepicker','autocomplete': 'off'}))
-   number_of_passengers = forms.IntegerField(widget=forms.TextInput(attrs={'autocomplete': 'off'}))
->>>>>>> 167d511b4b027b5b7827f8ded17cf8fd2538f851
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())

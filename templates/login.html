@@ -1,62 +1,27 @@
 <!DOCTYPE html>
-<<<<<<< HEAD
 {% extends 'base.html' %}
 {% block title %}Login{% endblock %}
 {% block body_block %}
-<div class="form-group jumbotron">
+<div class="form-group jumbotron" style="margin: 100px 300px;">
   <form action="{% url 'airline3app:user_login' %}" method="post">
     {% csrf_token %}
     {% for message in messages %}
       <div class="alert alert-danger">
         {{ message }}
-=======
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="{% url 'base' %}">DJANGO</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="{% url 'admin:index' %}">Admin<span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'airline3app:register' %}">Register</a>
-      </li>
-      {% if user.is_authenticated %}
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'user_logout' %}">Logout</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'ticket_list' %}">My Tickets</a>
-      </li>
-      {% else %}
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'airline3app:user_login' %}">Login</a>
-      </li>
-        {% endif %}
->>>>>>> 167d511b4b027b5b7827f8ded17cf8fd2538f851
       </div>
     {% endfor %}
+    <h1 align="center">Login</h1>
     <div>
-      <label for="username">Username:</label>
       <input type="text" name="username" placeholder="Enter Username" class="form-control">
     </div>
+    <br>
     <div>
-      <br>
-      <label for="password">Password:</label>
       <input type="password" name="password" class="form-control" placeholder="Enter Password">
     </div>
     <br>
-    <input class= "btn btn-lg btn-primary" type="submit" value="Login">
+    <div class="col-md text-center">
+      <input class="btn btn-lg btn-primary" type="submit" value="Login">
+    </div>
   </form>
 </div>
 {% endblock %}
