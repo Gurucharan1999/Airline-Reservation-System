@@ -1,31 +1,11 @@
 <!DOCTYPE html>
-{% extends 'base.html' %}
-{% block title %}Search Flights{% endblock %}
-{% block links_n_scripts %}
-  {% load bootstrap4 %}
-  {% bootstrap_css %}
-  {% bootstrap_javascript jquery='full' %}
-  {{ form.media }}
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script>
-  $( function() {
-    $( ".datepicker" ).datepicker();
-  } );
-  </script>
-<<<<<<< HEAD
-{% endblock %}
-{% block body_block %}
-<div class="container jumbotron">
-  <form method="post">
-    {% bootstrap_form form %}
-    {% csrf_token %}
-=======
-</head>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
   <body>
-
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="{% url 'base' %}">DJANGO</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,13 +34,9 @@
       </li>
         {% endif %}
       </div>
-</nav>
-  <div class="container jumbotron">
-    <form method="post">
-     {% bootstrap_form form %}
-      {% csrf_token %}
->>>>>>> 167d511b4b027b5b7827f8ded17cf8fd2538f851
-    <button class = "btn btn-primary"type="submit"> Search </button>
-  </form>
-</div>
-{% endblock %}
+      </nav>
+    <div class = 'container jumbotron'>
+        <h1>Congrats on booking your flight!</h1>
+    </div>
+  </body>
+</html>
