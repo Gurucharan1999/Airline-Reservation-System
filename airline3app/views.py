@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from airline3app.models import FlightDetail,Route,ForPass,Passengers
+from airline3app.models import FlightDetail,Route,ForPass,Passengers,Tickets,TicketHolders
 from airline3app.forms import SearchForm,UserForm,UserProfileInfoForm,PassengerForm
 from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView
@@ -9,6 +9,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth import authenticate,login,logout
+import random
 # Create your views here.
 
 global num
@@ -37,6 +38,7 @@ def plane_list(request):
         form = SearchForm(request.POST)
         if form.is_valid():
             ForPass.objects.all().delete()
+            Passengers.objects.all().delete()
             global num
             num = form.cleaned_data.get('number_of_passengers')
             for i in range(int(num)+1):
@@ -61,6 +63,16 @@ class plane_detail_book(DetailView):
         context['hello'] = ForPass.objects.all()
         return context
 
+def ticket_list(request):
+    tickets = Tickets.objects.filter(username=request.user)
+    return render(request,'ticket_list.html',{'tickets':tickets})
+
+class my_tickets(DetailView):
+    context_object_name = 'ticket'
+    model = models.Tickets
+    template_name = 'my_tickets.html'
+
+
 def passenger_info(request):
     global num
     numb = int(num)
@@ -75,7 +87,8 @@ def passenger_info(request):
             profile = passenger_details.save(commit=False)
             profile.username = request.user
             profile.save()
-        return HttpResponseRedirect(reverse('airline3app:passenger_info'))
+            passenger_details = PassengerForm()
+        return render(request,'passenger_info.html',{'passenger_details':passenger_details,'count':count,'num':numb })
 
     elif request.method == "POST" and count==0:
         passenger_details = PassengerForm(data=request.POST)
@@ -83,7 +96,7 @@ def passenger_info(request):
             profile = passenger_details.save(commit=False)
             profile.username = request.user
             profile.save()
-        return HttpResponseRedirect(reverse('index'))
+        return HttpResponseRedirect(reverse('payments_page'))
 
     else:
         passenger_details = PassengerForm()
@@ -107,7 +120,6 @@ def register(request):
             user = user_form.save()
             user.set_password(user.password)
             user.save()
-
             profile = profile_form.save(commit=False)
             profile.user = user
 
@@ -129,6 +141,47 @@ def register(request):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('base'))
+
+def makePNR():
+    PNR=''
+    while len(PNR)<10:
+        n = random.randint(0,9)
+        PNR = PNR + str(n)
+    k=int(PNR)
+    return k
+
+
+
+
+
+@login_required
+def payments_page(request):
+
+    if request.method == "POST":
+        while True:
+            key = makePNR()
+            if not Tickets.objects.filter(PNR=key).exists():
+                break
+        p = Tickets(username = request.user,PNR = key)
+        p.save()
+        count = Passengers.objects.all().count()
+        for i in range(count):
+            Passenger = Passengers.objects.all()
+            firstname= Passenger[i].passenger_firstname
+            lastname=Passenger[i].passenger_lastname
+            age=Passenger[i].passenger_age
+            gender=Passenger[i].passenger_gender
+            q = TicketHolders(PNR = key, passenger_firstname= firstname,passenger_lastname=lastname,passenger_age=age,passenger_gender=gender)
+            q.save()
+        return HttpResponseRedirect(reverse('congrats'))
+
+    return render(request,'payments_page.html')
+
+@login_required
+def congrats(request):
+
+    return render(request,'congrats.html')
+
 
 def user_login(request):
     if request.method == 'POST':

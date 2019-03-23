@@ -36,5 +36,20 @@ class Passengers(models.Model):
     username = models.ForeignKey(User, null=False, blank=False,on_delete=None)
     passenger_firstname = models.CharField(max_length = 100)
     passenger_lastname = models.CharField(max_length = 100)
-    passenger_age = models.CharField(max_length = 100)
+    passenger_age = models.PositiveIntegerField()
     passenger_gender =  models.CharField(max_length=6, choices=GENDER_CHOICES, default='female')
+
+class Tickets(models.Model):
+    username = models.ForeignKey(User, null=False, blank=False,on_delete=None)
+    PNR = models.PositiveIntegerField(unique=True)
+
+    def get_absolute_url(self):
+        return reverse("my_tickets",kwargs={'pk': self.pk})
+
+
+class TicketHolders(models.Model):
+    PNR = models.PositiveIntegerField()
+    passenger_firstname = models.CharField(max_length = 100)
+    passenger_lastname = models.CharField(max_length = 100)
+    passenger_age = models.PositiveIntegerField()
+    passenger_gender = models.CharField(max_length=6, choices=GENDER_CHOICES, default='female')

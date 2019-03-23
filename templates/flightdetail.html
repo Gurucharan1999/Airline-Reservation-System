@@ -37,6 +37,9 @@
       <li class="nav-item">
         <a class="nav-link" href="{% url 'user_logout' %}">Logout</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'ticket_list' %}">My Tickets</a>
+      </li>
       {% else %}
       <li class="nav-item">
         <a class="nav-link" href="{% url 'airline3app:user_login' %}">Login</a>
@@ -70,7 +73,7 @@
 
 <h1> Congratulations for selecting your flight {{ flights.flight_no }}<h1>
   <h3>Proceed to fill passenger details by clicking here:</h3>
-  <a href="{% url 'airline3app:passenger_info'%}">  <button class = "btn btn-primary"type="submit"> Book </button></a>
+  <a href="{% url 'airline3app:passenger_info' %}">  <button class = "btn btn-primary"type="submit"> Book </button></a>
   </div>
   </body>
 </html>

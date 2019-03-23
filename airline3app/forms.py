@@ -8,7 +8,7 @@ class SearchForm(forms.Form):
    source = forms.CharField(widget=forms.TextInput(attrs={'autocomplete': 'off'}))
    destination = forms.CharField(widget=forms.TextInput(attrs={'autocomplete': 'off'}))
    Date = forms.DateField(widget=forms.TextInput(attrs={'class':'datepicker','autocomplete': 'off'}))
-   number_of_passengers = forms.CharField(widget=forms.TextInput(attrs={'autocomplete': 'off'}))
+   number_of_passengers = forms.IntegerField(widget=forms.TextInput(attrs={'autocomplete': 'off'}))
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())

@@ -25,10 +25,10 @@
       <li class="nav-item">
         <a class="nav-link" href="{% url 'user_logout' %}">Logout</a>
       </li>
-
       <li class="nav-item">
         <a class="nav-link" href="{% url 'ticket_list' %}">My Tickets</a>
       </li>
+
       {% else %}
       <li class="nav-item">
         <a class="nav-link" href="{% url 'airline3app:user_login' %}">Login</a>
@@ -37,7 +37,8 @@
       </div>
       </nav>
     <div class = 'container jumbotron'>
-        <h1>HELLO PLEASE LOGIN OR REGISTER!</h1>
+        <h1> {{ticket.PNR}} </h1>
+        
     </div>
   </body>
 </html>

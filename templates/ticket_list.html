@@ -25,10 +25,10 @@
       <li class="nav-item">
         <a class="nav-link" href="{% url 'user_logout' %}">Logout</a>
       </li>
-
       <li class="nav-item">
         <a class="nav-link" href="{% url 'ticket_list' %}">My Tickets</a>
       </li>
+
       {% else %}
       <li class="nav-item">
         <a class="nav-link" href="{% url 'airline3app:user_login' %}">Login</a>
@@ -37,7 +37,17 @@
       </div>
       </nav>
     <div class = 'container jumbotron'>
-        <h1>HELLO PLEASE LOGIN OR REGISTER!</h1>
+
+          {% if tickets %}
+            {% for tickets in tickets %}
+              <div class="jumbotron">
+                <h3>{{ tickets.PNR }}<h3>
+              <a href="{% url 'my_tickets' pk=tickets.pk %}">  <button class = "btn btn-primary"type="submit"> SHOW </button></a>
+                </div>
+            {% endfor %}
+          {% else %}
+            <h1>NO TICKETS</h1>
+          {% endif %}
     </div>
   </body>
 </html>
