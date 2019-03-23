@@ -2,23 +2,10 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>INDEX</title>
-    {% load bootstrap4 %}
-    {% bootstrap_css %}
-    {% bootstrap_javascript jquery='full' %}
-    {{ passenger_details.media }}
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script>
-  $( function() {
-    $( ".datepicker" ).datepicker();
-  } );
-  </script>
-</head>
+    <title></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
   <body>
-
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="{% url 'base' %}">DJANGO</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,20 +28,17 @@
       <li class="nav-item">
         <a class="nav-link" href="{% url 'ticket_list' %}">My Tickets</a>
       </li>
+
       {% else %}
       <li class="nav-item">
         <a class="nav-link" href="{% url 'airline3app:user_login' %}">Login</a>
       </li>
         {% endif %}
       </div>
-</nav>
-  <div class="container jumbotron">
-    <h1>Passenger {{ num }}</h1>
-    <form method="post">
-     {% bootstrap_form passenger_details %}
-      {% csrf_token %}
-    <button class = "btn btn-primary"type="submit"> Search </button>
-    </form>
-  </div>
+      </nav>
+    <div class = 'container jumbotron'>
+        <h1> {{ticket.PNR}} </h1>
+        
+    </div>
   </body>
 </html>
