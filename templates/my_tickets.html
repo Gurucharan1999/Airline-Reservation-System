@@ -4,10 +4,15 @@
     <meta charset="utf-8">
     <title></title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<style>
+table, th, td {
+border: 1px solid black;
+}
+</style>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="{% url 'base' %}">DJANGO</a>
+  <a class="navbar-brand" href="{% url 'base' %}">The Indian Peacock</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -17,28 +22,84 @@
       <li class="nav-item active">
         <a class="nav-link" href="{% url 'admin:index' %}">Admin<span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'airline3app:register' %}">Register</a>
-      </li>
+
 
       {% if user.is_authenticated %}
       <li class="nav-item">
         <a class="nav-link" href="{% url 'user_logout' %}">Logout</a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" href="{% url 'index' %}">Search Flights</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="{% url 'ticket_list' %}">My Tickets</a>
       </li>
-
       {% else %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'airline3app:register' %}">Register</a>
+      </li>
       <li class="nav-item">
         <a class="nav-link" href="{% url 'airline3app:user_login' %}">Login</a>
       </li>
         {% endif %}
       </div>
       </nav>
+      <br>
     <div class = 'container jumbotron'>
-        <h1> {{ticket.PNR}} </h1>
-        
-    </div>
+
+<div>
+        {% if ticket %}
+          {% for ticket in ticket %}
+            <h2>PNR: {{ ticket.PNR }}</h1>
+            <h3>Date: {{ ticket.Date }}</h1>
+          {% endfor %}
+        {% endif %}
+</div>
+<br>
+<div class ="src">
+  {% if ticket %}
+    {% for ticket in ticket %}
+      <h1>{{ ticket.src }}</h1>
+      <h2>{{ ticket.arrival }}</h2>
+    {% endfor %}
+  {% endif %}
+</div>
+<div class = "dest">
+  {% if ticket %}
+    {% for ticket in ticket %}
+      <h1>{{ ticket.dest }}</h1>
+      <h2>{{ ticket.departure }}</h2>
+    {% endfor %}
+  {% endif %}
+</div>
+<div>
+<br>
+  <h2>Boaders:</h2>
+  <table style="width:100%">
+    <tr>
+      <th><h2>Name</h2></th>
+      <th><h2>Age</h2></th>
+      <th><h2>Gender</h2></th>
+    </tr>
+  {% if passenger %}
+    {% for passenger in passenger %}
+    <tr>
+      <td><h4>{{ passenger.passenger_firstname }} {{ passenger.passenger_lastname}}</h4></td>
+      <td><h4>{{ passenger.passenger_age }}</h4></td>
+      <td><h4>{{ passenger.passenger_gender }}</h4></td>
+    </tr>
+    {% endfor %}
+  {% endif %}
+</table>
+</div>
+<br>
+<div>
+  {% if ticket %}
+    {% for ticket in ticket %}
+      <h2>  Price: Rs.{{ ticket.price }}</h2>
+    {% endfor %}
+  {% endif %}
+</div>
+</div>
   </body>
 </html>

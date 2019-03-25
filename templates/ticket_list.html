@@ -4,10 +4,16 @@
     <meta charset="utf-8">
     <title></title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+
+    .glyphicon{position:relative;top:0.5px;display:inline-block;font-family:"Glyphicons Halflings";font-style:normal;font-weight:400;line-height:0.5;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+    .glyphicon-plane:before{content:"\e108"}
+    .glyphicon-arrow-right:before{content:"\e092"}
+    </style>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="{% url 'base' %}">DJANGO</a>
+  <a class="navbar-brand" href="{% url 'base' %}">The Indian Peacock</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -17,32 +23,38 @@
       <li class="nav-item active">
         <a class="nav-link" href="{% url 'admin:index' %}">Admin<span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'airline3app:register' %}">Register</a>
-      </li>
+
 
       {% if user.is_authenticated %}
       <li class="nav-item">
         <a class="nav-link" href="{% url 'user_logout' %}">Logout</a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" href="{% url 'index' %}">Search Flights</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="{% url 'ticket_list' %}">My Tickets</a>
       </li>
-
       {% else %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'airline3app:register' %}">Register</a>
+      </li>
       <li class="nav-item">
         <a class="nav-link" href="{% url 'airline3app:user_login' %}">Login</a>
       </li>
         {% endif %}
       </div>
       </nav>
-    <div class = 'container jumbotron'>
+      <br>
+    <div class = 'container'>
 
-          {% if tickets %}
-            {% for tickets in tickets %}
+          {% if ticket %}
+            {% for ticket in ticket %}
               <div class="jumbotron">
-                <h3>{{ tickets.PNR }}<h3>
-              <a href="{% url 'my_tickets' pk=tickets.pk %}">  <button class = "btn btn-primary"type="submit"> SHOW </button></a>
+                <h3>PNR: {{ ticket.PNR }}<h3>
+                <h4>{{ ticket.src }}  <span class="glyphicon glyphicon-arrow-right"></span> {{ ticket.dest }}</h4>
+                <h4>{{ ticket.Date }}</h4>
+              <a href="{% url 'my_tickets' pk=ticket.pk %}">  <button class = "btn btn-primary"type="submit"> SHOW </button></a>
                 </div>
             {% endfor %}
           {% else %}

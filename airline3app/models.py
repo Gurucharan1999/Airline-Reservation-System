@@ -13,13 +13,16 @@ class ForPass(models.Model):
     passenger = models.CharField(max_length = 10)
 
 class Route(models.Model):
-    route_no = models.CharField(max_length = 10)
+    route_no = models.PositiveIntegerField(max_length = 10)
     route_dest = models.CharField(max_length = 100)
     route_src = models.CharField(max_length = 100)
 
 class FlightDetail(models.Model):
     flight_no = models.CharField(max_length = 100,)
     route = models.CharField(max_length = 100)
+    arrival = models.TimeField()
+    departure = models.TimeField(null=True)
+    price = models.PositiveIntegerField(null=True)
 
     def get_absolute_url(self):
         return reverse("plane_detail_book",kwargs={'pk': self.pk})
@@ -42,10 +45,23 @@ class Passengers(models.Model):
 class Tickets(models.Model):
     username = models.ForeignKey(User, null=False, blank=False,on_delete=None)
     PNR = models.PositiveIntegerField(unique=True)
-
+    Date = models.DateField(null=True)
+    price = models.PositiveIntegerField(null=True)
+    dest = models.CharField(max_length = 100,null=True)
+    src = models.CharField(max_length = 100,null=True)
+    arrival = models.TimeField(null=True)
+    departure = models.TimeField(null=True)
+    flight_no =  models.CharField(max_length = 100,null=True)
     def get_absolute_url(self):
         return reverse("my_tickets",kwargs={'pk': self.pk})
 
+class DateRoute(models.Model):
+    Date = models.DateField(null=True)
+    Route = models.PositiveIntegerField(max_length = 10,null=True)
+
+class NumPrice(models.Model):
+    flight_no = models.CharField(max_length = 100,null=True)
+    price = models.PositiveIntegerField(null=True)
 
 class TicketHolders(models.Model):
     PNR = models.PositiveIntegerField()

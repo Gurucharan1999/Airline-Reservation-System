@@ -1,5 +1,5 @@
 from django.contrib import admin
-from airline3app.models import Route,FlightDetail,ForPass
+from airline3app.models import Route,FlightDetail,ForPass,NumPrice,DateRoute
 from airline3app.models import UserProfileInfo,Passengers,TicketHolders,Tickets
 
 # Register your models here.
@@ -10,3 +10,5 @@ admin.site.register(ForPass)
 admin.site.register(Passengers)
 admin.site.register(Tickets)
 admin.site.register(TicketHolders)
+admin.site.register(NumPrice)
+admin.site.register(DateRoute)
