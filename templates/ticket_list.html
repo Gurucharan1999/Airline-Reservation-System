@@ -1,53 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="{% url 'base' %}">DJANGO</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="{% url 'admin:index' %}">Admin<span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'airline3app:register' %}">Register</a>
-      </li>
-
-      {% if user.is_authenticated %}
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'user_logout' %}">Logout</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'ticket_list' %}">My Tickets</a>
-      </li>
-
-      {% else %}
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'airline3app:user_login' %}">Login</a>
-      </li>
-        {% endif %}
-      </div>
-      </nav>
-    <div class = 'container jumbotron'>
-
-          {% if tickets %}
-            {% for tickets in tickets %}
-              <div class="jumbotron">
-                <h3>{{ tickets.PNR }}<h3>
-              <a href="{% url 'my_tickets' pk=tickets.pk %}">  <button class = "btn btn-primary"type="submit"> SHOW </button></a>
-                </div>
-            {% endfor %}
-          {% else %}
-            <h1>NO TICKETS</h1>
-          {% endif %}
+{% extends 'base.html' %}
+{% block title %}Tickets{% endblock %}
+{% block links_n_scripts %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+{% endblock %}
+{% block body_block %}
+{% if ticket %}
+  {% for ticket in ticket %}
+    <div class="jumbotron">
+      <h3>PNR: {{ ticket.PNR }}<h3>
+      <h4>{{ ticket.src }}  <i class="fas fa-arrow-right fa-sm"></i> {{ ticket.dest }}</h4>
+      <h4>{{ ticket.Date }}</h4>
+      <a href="{% url 'my_tickets' pk=ticket.pk %}">  <button class = "btn btn-primary"type="submit"> SHOW </button></a>
     </div>
-  </body>
-</html>
+  {% endfor %}
+{% else %}
+  <h1 style="color: #efefef;">NO TICKETS</h1>
+{% endif %}
+{% endblock %}

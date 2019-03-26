@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from airline3app.models import FlightDetail,Route,ForPass,Passengers,Tickets,TicketHolders
+from airline3app.models import FlightDetail,Route,ForPass,Passengers,Tickets,TicketHolders,NumPrice,DateRoute
 from airline3app.forms import SearchForm,UserForm,UserProfileInfoForm,PassengerForm
 from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView
@@ -39,38 +39,44 @@ def plane_list(request):
         if form.is_valid():
             ForPass.objects.all().delete()
             Passengers.objects.all().delete()
+            DateRoute.objects.all().delete()
             global num
             num = form.cleaned_data.get('number_of_passengers')
             for i in range(int(num)+1):
                 p = ForPass(passenger = i+1)
                 p.save()
-            p = Route.objects.filter(route_dest = form.cleaned_data.get('destination'),route_src = form.cleaned_data.get('source'))
+            p = Route.objects.filter(route_dest = form.cleaned_data.get('destination'),
+                                    route_src = form.cleaned_data.get('source'))
             if not p:
                 route_id = 1000
             else:
                 route_id = p[0].route_no
             flights = FlightDetail.objects.filter(route=route_id)
+            dest = form.cleaned_data.get('destination')
+            src = form.cleaned_data.get('source')
+            q = DateRoute(Route = route_id,Date=form.cleaned_data.get('Date'))
+            q.save()
+    return render(request, 'plane_list.html', {'form': form,'flights': flights,'dest':dest,'src':src})
 
-    return render(request, 'plane_list.html', {'form': form,'flights': flights})
 
+def plane_detail_book(request,pk):
+    NumPrice.objects.all().delete()
+    flights = FlightDetail.objects.filter(pk=pk)
+    r = NumPrice(flight_no=flights[0].flight_no,price=flights[0].price)
+    r.save()
+    return render(request, 'flightdetail.html',{'flights': flights})
 
-class plane_detail_book(DetailView):
-    context_object_name = 'flights'
-    model = models.FlightDetail
-    template_name = 'flightdetail.html'
-    def get_context_data(self, **kwargs):
-        context = super(plane_detail_book, self).get_context_data(**kwargs)
-        context['hello'] = ForPass.objects.all()
-        return context
 
 def ticket_list(request):
     tickets = Tickets.objects.filter(username=request.user)
-    return render(request,'ticket_list.html',{'tickets':tickets})
+    return render(request,'ticket_list.html',{'ticket':tickets})
 
-class my_tickets(DetailView):
-    context_object_name = 'ticket'
-    model = models.Tickets
-    template_name = 'my_tickets.html'
+
+def my_tickets(request, pk):
+    ticket = Tickets.objects.filter(pk=pk)
+    object= ticket[0].PNR
+    passenger = TicketHolders.objects.filter(PNR = object)
+    return render(request, 'my_tickets.html',{'ticket': ticket,'passenger':passenger})
 
 
 def passenger_info(request):
@@ -143,7 +149,7 @@ def register(request):
 @login_required
 def user_logout(request):
     logout(request)
-    return HttpResponseRedirect(reverse('about'))
+    return HttpResponseRedirect(reverse('airline3app:user_login'))
 
 def makePNR():
     PNR=''
@@ -154,18 +160,27 @@ def makePNR():
     return k
 
 
-
-
-
 @login_required
 def payments_page(request):
+    global num
+    numb = int(num)
+    dateroute = DateRoute.objects.all()
+    date = dateroute[0].Date
+    route = dateroute[0].Route
+    final = Route.objects.filter(route_no=route)
+    numprice = NumPrice.objects.all()
+    flight_no = numprice[0].flight_no
+    final2 = FlightDetail.objects.filter(flight_no=flight_no,route=route)
 
+    price = numprice[0].price
+    t_price = price*numb
     if request.method == "POST":
+
         while True:
             key = makePNR()
             if not Tickets.objects.filter(PNR=key).exists():
                 break
-        p = Tickets(username = request.user,PNR = key)
+        p = Tickets(username = request.user,PNR = key,Date=date,src=final[0].route_src,dest=final[0].route_dest,arrival=final2[0].arrival,departure=final2[0].departure,flight_no=flight_no,price=t_price)
         p.save()
         count = Passengers.objects.all().count()
         for i in range(count):
@@ -178,7 +193,7 @@ def payments_page(request):
             q.save()
         return HttpResponseRedirect(reverse('congrats'))
 
-    return render(request,'payments_page.html')
+    return render(request,'payments_page.html',{'price':t_price})
 
 @login_required
 def congrats(request):
@@ -204,6 +219,5 @@ def user_login(request):
             messages.error(request,'Username or Password not correct! Try Again!')
             return render(request, 'login.html',{})
             #return HttpResponse("Invalid Login Details")
-
     else:
         return render(request, 'login.html',{})

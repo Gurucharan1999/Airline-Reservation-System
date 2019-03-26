@@ -2,7 +2,7 @@
 {% extends 'base.html' %}
 {% block title %}Login{% endblock %}
 {% block body_block %}
-<div class="form-group jumbotron" style="margin: 100px 300px;">
+<div class="form-group jumbotron" style="margin: 60px 300px;">
   <form action="{% url 'airline3app:user_login' %}" method="post">
     {% csrf_token %}
     {% for message in messages %}
@@ -11,6 +11,7 @@
       </div>
     {% endfor %}
     <h1 align="center">Login</h1>
+    <br>
     <div>
       <input type="text" name="username" placeholder="Enter Username" class="form-control">
     </div>

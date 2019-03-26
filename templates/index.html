@@ -17,11 +17,14 @@
   </script>
 {% endblock %}
 {% block body_block %}
-<div class="container jumbotron">
+<div class="jumbotron">
   <form method="post">
-    {% bootstrap_form form %}
     {% csrf_token %}
-    <button class = "btn btn-primary"type="submit"> Search </button>
+    <div class="form-group"><label for="id_source">Source</label><input type="text" name="source" autocomplete="off" class="form-control" placeholder="Source" title="" required id="id_source"></div>
+    <div class="form-group"><label for="id_destination">Destination</label><input type="text" name="destination" autocomplete="off" class="form-control" placeholder="Destination" title="" required id="id_destination"></div>
+    <div class="form-group"><label for="id_Date">Date</label><input type="text" name="Date" class="form-control datepicker" autocomplete="off" placeholder="Date" title="" required id="id_Date"></div>
+    <div class="form-group"><label for="id_number_of_passengers">Number of passengers</label><input type="text" name="number_of_passengers" autocomplete="off" class="form-control" placeholder="Number of passengers" title="" required id="id_number_of_passengers"></div>
+    <button class = "btn btn-primary"type="submit">Search</button>
   </form>
 </div>
 {% endblock %}

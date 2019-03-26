@@ -10,7 +10,7 @@
   </head>
   <body style="background-image: url({% static 'images/background.jpg' %}); background-size: cover; background-attachment: fixed;">
     <nav class="navbar navbar-expand-lg navbar-dark navbar-fixed-top">
-      <a class="navbar-brand" href="{% url 'about' %}">Airline Reservation System</a>
+      <a class="navbar-brand" href="{% url 'about' %}">The Indian Peacock</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -27,19 +27,23 @@
             <a class="nav-link" href="{% url 'airline3app:register' %}">Register</a>
           </li>
           {% else %}
-          <li class="nav-item active navbar-right">
+          <li class="nav-item active">
             <a class="nav-link">{{ user.first_name }} {{ user.last_name }}</a>
           </li>
-          <li class="nav-item navbar-right">
+          <li class="nav-itemt">
             <a class="nav-link" href="{% url 'ticket_list' %}">My Tickets</a>
           </li>
-          <li class="nav-item navbar-right">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'index' %}">Search Flights</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="{% url 'user_logout' %}">Logout</a>
           </li>
           {% endif %}
         </ul>
       </div>
     </nav>
+    <br>
     <div class="container">
       {% block body_block %}
       {% endblock %}

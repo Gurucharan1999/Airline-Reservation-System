@@ -1,8 +1,67 @@
 <!DOCTYPE html>
 {% extends 'base.html' %}
 {% block title %}Ticket PNR{% endblock %}
+{% block links_n_scripts %}
+<style>
+table, th, td {
+  border: 1px solid black;
+}
+</style>
+{% endblock %}
 {% block body_block %}
 <div class = 'jumbotron'>
-  <h1> {{ticket.PNR}} </h1>
+  <div>
+    {% if ticket %}
+      {% for ticket in ticket %}
+        <h2>PNR: {{ ticket.PNR }}</h1>
+        <h3>Date: {{ ticket.Date }}</h1>
+      {% endfor %}
+    {% endif %}
+  </div>
+  <br>
+  <div class ="src">
+    {% if ticket %}
+      {% for ticket in ticket %}
+        <h1>{{ ticket.src }}</h1>
+        <h2>{{ ticket.arrival }}</h2>
+      {% endfor %}
+    {% endif %}
+  </div>
+  <div class = "dest">
+    {% if ticket %}
+      {% for ticket in ticket %}
+        <h1>{{ ticket.dest }}</h1>
+        <h2>{{ ticket.departure }}</h2>
+      {% endfor %}
+    {% endif %}
+  </div>
+  <br>
+  <div>
+    <h2>Boaders:</h2>
+    <table style="width:100%">
+      <tr>
+        <th><h2>Name</h2></th>
+        <th><h2>Age</h2></th>
+        <th><h2>Gender</h2></th>
+      </tr>
+      {% if passenger %}
+        {% for passenger in passenger %}
+          <tr>
+            <td><h4>{{ passenger.passenger_firstname }} {{ passenger.passenger_lastname}}</h4></td>
+            <td><h4>{{ passenger.passenger_age }}</h4></td>
+            <td><h4>{{ passenger.passenger_gender }}</h4></td>
+          </tr>
+        {% endfor %}
+      {% endif %}
+    </table>
+  </div>
+  <br>
+  <div>
+    {% if ticket %}
+      {% for ticket in ticket %}
+        <h2>Price: Rs.{{ ticket.price }}</h2>
+      {% endfor %}
+    {% endif %}
+  </div>
 </div>
 {% endblock %}
