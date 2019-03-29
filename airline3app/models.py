@@ -23,14 +23,12 @@ class FlightDetail(models.Model):
     arrival = models.TimeField()
     departure = models.TimeField(null=True)
     price = models.PositiveIntegerField(null=True)
-
     def get_absolute_url(self):
         return reverse("plane_detail_book",kwargs={'pk': self.pk})
 
 class UserProfileInfo(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     profile_pic = models.ImageField(upload_to='profile_pics',blank=True)
-
     def __str__(self):
         return self.user.username
 

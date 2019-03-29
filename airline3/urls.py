@@ -19,7 +19,7 @@ from airline3app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',views.base,name='base'),
+    path('',views.home,name='home'),
     path('about/',views.about,name='about'),
     path('planes/',views.plane_list,name='plane_list'),
     path('<int:pk>/',views.plane_detail_book,name='plane_detail_book'),
