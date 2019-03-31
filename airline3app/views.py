@@ -17,15 +17,13 @@ global num
 @login_required
 def index(request):
     form = SearchForm()
-
+    
     if request.method == "POST":
         form = SearchForm(request.POST)
-
         if form.is_valid():
             return plane_list(request)
         else:
             print("ERROR")
-
     return render(request,'index.html',{'form':form})
 
 
@@ -221,3 +219,19 @@ def user_login(request):
             #return HttpResponse("Invalid Login Details")
     else:
         return render(request, 'login.html',{})
+
+def srch_src(request):
+    if request.method == "POST":
+        srch_txt = request.POST['src_txt']
+    else:
+        srch_txt = ''
+    srcres = Route.objects.filter(route_src__icontains=srch_txt)
+    return render(request, 'ajax_src.html', {'srcres':srcres})
+
+def srch_dst(request):
+    if request.method == "POST":
+        srch_txt = request.POST['dst_txt']
+    else:
+        srch_txt = ''
+    dstres = Route.objects.filter(route_dest__icontains=srch_txt)
+    return render(request, 'ajax_dst.html', {'dstres':dstres})

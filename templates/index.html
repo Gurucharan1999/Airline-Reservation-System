@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}Search Flights{% endblock %}
 {% block index %}{% endblock %}
 {% block links_n_scripts %}
@@ -8,12 +9,12 @@
   {% bootstrap_javascript jquery='full' %}
   {{ form.media }}
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="{% static 'js/ajax.js' %}"></script>
   <script>
   $( function() {
-    $( ".datepicker" ).datepicker();
+    $(".datepicker").datepicker();
   } );
   </script>
 {% endblock %}
@@ -21,11 +22,25 @@
 <div class="jumbotron">
   <form method="post">
     {% csrf_token %}
-    <div class="form-group"><label for="id_source">Source</label><input type="text" name="source" autocomplete="off" class="form-control" placeholder="Source" title="" required id="id_source"></div>
-    <div class="form-group"><label for="id_destination">Destination</label><input type="text" name="destination" autocomplete="off" class="form-control" placeholder="Destination" title="" required id="id_destination"></div>
-    <div class="form-group"><label for="id_Date">Date</label><input type="text" name="Date" class="form-control datepicker" autocomplete="off" placeholder="Date" title="" required id="id_Date"></div>
-    <div class="form-group"><label for="id_number_of_passengers">Number of passengers</label><input type="text" name="number_of_passengers" autocomplete="off" class="form-control" placeholder="Number of passengers" title="" required id="id_number_of_passengers"></div>
-    <button class = "btn btn-primary"type="submit">Search</button>
+    <div class="form-group">
+      <label for="id_source">Source</label>
+      <input type="text" autocomplete="off" class="form-control" placeholder="Source" name="src_txt" title="" required id="id_source">
+      <datalist id="srcres">
+      </datalist>
+    </div>
+    <div class="form-group">
+      <label for="id_destination">Destination</label>
+      <input type="text" name="destination" autocomplete="off" class="form-control" placeholder="Destination" title="" required id="id_destination">
+    </div>
+    <div class="form-group">
+      <label for="id_Date">Date</label>
+      <input type="text" name="Date" class="form-control datepicker" autocomplete="off" placeholder="Date" title="" required id="id_Date">
+    </div>
+    <div class="form-group">
+      <label for="id_number_of_passengers">Number of passengers</label>
+      <input type="text" name="number_of_passengers" autocomplete="off" class="form-control" placeholder="Number of passengers" title="" required id="id_number_of_passengers">
+    </div>
+    <button class="btn btn-primary" type="submit">Search</button>
   </form>
 </div>
 {% endblock %}

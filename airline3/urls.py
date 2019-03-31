@@ -30,4 +30,6 @@ urlpatterns = [
     path('congrats/',views.congrats,name='congrats'),
     path('tickets/',views.ticket_list,name='ticket_list'),
     path('tickets/<int:pk>/',views.my_tickets,name='my_tickets'),
+    path('index/srchsrc/',views.srch_src,name='source'),
+    path('index/srchdst/',views.srch_dst,name='destination'),
 ]

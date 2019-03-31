@@ -3,6 +3,9 @@
 .jumbotron-translucent{
     background-color: #00000029!important;
     box-shadow: inset 0 0 11px black;
+    padding: 40px!important;
+    border-top-left-radius: 4rem!important;
+    border-bottom-right-radius: 4rem!important;
 }
 
 .nav-dark-translucent{

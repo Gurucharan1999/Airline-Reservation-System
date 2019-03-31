@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'airline3app',
     'bootstrap_datepicker_plus',
     'bootstrap4',
+    'import_export',
 ]
 
 MIDDLEWARE = [
@@ -72,6 +73,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'airline3.wsgi.application'
+IMPORT_EXPORT_USE_TRANSACTIONS = True
 
 
 # Database
