@@ -1,13 +1,13 @@
 from django import forms
 from bootstrap_datepicker_plus import DatePickerInput
 from django.contrib.auth.models import User
-from airline3app.models import UserProfileInfo,Passengers
+from airline3app.models import UserProfileInfo,Tickets
 
 
 class SearchForm(forms.Form):
     source = forms.CharField(widget=forms.TextInput(attrs={'autocomplete': 'off'}))
     destination = forms.CharField(widget=forms.TextInput(attrs={'autocomplete': 'off'}))
-    Date = forms.DateField(widget=forms.TextInput(attrs={'class':'datepicker','autocomplete': 'off'}))
+    Date = forms.DateField(widget=forms.TextInput(attrs={'class': 'datepicker', 'autocomplete': 'off'}))
     number_of_passengers = forms.CharField(widget=forms.TextInput(attrs={'autocomplete': 'off'}))
 
 class UserForm(forms.ModelForm):
@@ -23,9 +23,9 @@ class UserProfileInfoForm(forms.ModelForm):
 
 class PassengerForm(forms.ModelForm):
     class Meta():
-        model = Passengers
+        model = Tickets
         fields = (
         'passenger_firstname',
         'passenger_lastname',
-        'passenger_age',
+        'passenger_dob',
         'passenger_gender')

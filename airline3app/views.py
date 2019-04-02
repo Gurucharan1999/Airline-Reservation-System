@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from airline3app.models import FlightDetail,Route,ForPass,Passengers,Tickets,TicketHolders,NumPrice,DateRoute
-from airline3app.forms import SearchForm,UserForm,UserProfileInfoForm,PassengerForm
+from airline3app.models import Route, FlightDetail, UserTicketRel, PlaneTicketRel, Planes, UserProfileInfo, Tickets
+from airline3app.forms import SearchForm, UserForm, UserProfileInfoForm, PassengerForm
 from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView
 from . import models
@@ -17,7 +17,6 @@ global num
 @login_required
 def index(request):
     form = SearchForm()
-    
     if request.method == "POST":
         form = SearchForm(request.POST)
         if form.is_valid():
@@ -26,25 +25,18 @@ def index(request):
             print("ERROR")
     return render(request,'index.html',{'form':form})
 
-
 @login_required
 def plane_list(request):
-
     form = SearchForm(request.POST or None)
-
     if request.method == "POST":
         form = SearchForm(request.POST)
         if form.is_valid():
-            ForPass.objects.all().delete()
-            Passengers.objects.all().delete()
-            DateRoute.objects.all().delete()
             global num
             num = form.cleaned_data.get('number_of_passengers')
             for i in range(int(num)+1):
-                p = ForPass(passenger = i+1)
+                p = ForPass(passenger=i+1)
                 p.save()
-            p = Route.objects.filter(route_dest = form.cleaned_data.get('destination'),
-                                    route_src = form.cleaned_data.get('source'))
+            p = Route.objects.filter(route_dest=form.cleaned_data.get('destination'), route_src = form.cleaned_data.get('source'))
             if not p:
                 route_id = 1000
             else:
@@ -64,9 +56,8 @@ def plane_detail_book(request,pk):
     r.save()
     return render(request, 'flightdetail.html',{'flights': flights})
 
-
 def ticket_list(request):
-    tickets = Tickets.objects.filter(username=request.user)
+    tickets = UserTicketRel.objects.filter(username=request.user)
     return render(request,'ticket_list.html',{'ticket':tickets})
 
 
