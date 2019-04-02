@@ -57,16 +57,17 @@ def plane_detail_book(request,pk):
     return render(request, 'flightdetail.html',{'flights': flights})
 
 def ticket_list(request):
-    tickets = UserTicketRel.objects.filter(username=request.user)
-    return render(request,'ticket_list.html',{'ticket':tickets})
-
+    tickPNR = UserTicketRel.objects.filter(username=request.user)
+    tickets = Tickets.objects.none()
+    for i in tickPNR:
+        tickets = tickets | Tickets.objects.get(PNR=i.PNR)
+    return render(request, 'ticket_list.html', {'ticket': tickets, 'booked': })
 
 def my_tickets(request, pk):
     ticket = Tickets.objects.filter(pk=pk)
-    object= ticket[0].PNR
+    object = ticket[0].PNR
     passenger = TicketHolders.objects.filter(PNR = object)
     return render(request, 'my_tickets.html',{'ticket': ticket,'passenger':passenger})
-
 
 def passenger_info(request):
     global num
