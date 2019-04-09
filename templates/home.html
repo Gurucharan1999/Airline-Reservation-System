@@ -15,8 +15,10 @@
     <a href="{% url 'airline3app:user_login' %}" class="btn btn-lg btn-primary button-translucent" style="margin: 20px;"><i class="fas fa-sign-in-alt"></i> Login</a>
     <a href="{% url 'airline3app:register' %}" class="btn btn-lg btn-primary button-translucent" style="margin: 20px;">Register</a>
   {% else %}
+    <h5 style="color: white;">Welcome {{ user.first_name }} {{ user.last_name }}</h5>
     <a href="{% url 'ticket_list' %}" class="btn btn-lg btn-primary button-translucent" style="margin: 20px;"><i class="fas fa-ticket-alt"></i> My Tickets</a>
-    
+    <a href="{% url 'index' %}" class="btn btn-lg btn-primary button-translucent" style="margin: 20px;"><i class="fas fa-plane"></i> Search Flights</a>
+    <a href="{% url 'user_logout' %}" class="btn btn-lg btn-primary button-translucent" style="margin: 20px;">Logout</a>
   {% endif %}
 </div>
 {% endblock %}
