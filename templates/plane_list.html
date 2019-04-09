@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 {% extends 'base.html' %}
 {% block title %}Flights{% endblock %}
-{% block links_n_scripts %}
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-{% endblock %}
+{% block not_plane_list %}{% endblock %}
 {% block body_block %}
 {% if flights %}
   {% for flights in flights %}
@@ -12,7 +10,9 @@
       <h3>{{ src }} <i class="fas fa-arrow-right fa-sm"></i> {{ dest }}</h3>
       <h3>{{ flights.arrival }} -- {{ flights.departure }}</h3>
       <h2>Rs. {{ flights.price }}</h2>
-      <a href="{% url 'plane_detail_book' pk=flights.pk %}">  <button class = "btn btn-primary"type="submit"> Book </button></a>
+      <a href="{% url 'plane_detail_book' pk=flights.pk %}">
+      <button class = "btn btn-primary"type="submit">Book</button>
+      </a>
     </div>
   {% endfor %}
 {% else %}

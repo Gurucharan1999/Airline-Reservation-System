@@ -6,54 +6,49 @@
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 {% endblock %}
 {% block body_block %}
-<div class="container jumbotron">
-  <div class='row'>
-    <div class='col-md-4'></div>
-    <div class='col-md-4'>
-      <form method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓" /><input name="_method" type="hidden" value="PUT" /><input name="authenticity_token" type="hidden" value="qLZ9cScer7ZxqulsUWazw4x3cSEzv899SP/7ThPCOV8=" /></div>
-        {% csrf_token %}
-        <div class='form-row'>
-          <div class='col-xs-12 form-group required'>
-            <label class='control-label'>Name on Card</label>
-            <input class='form-control' size='40' type='text'>
-          </div>
-        </div>
-        <div class='form-row'>
-          <div class='col-xs-12 form-group required'>
-            <label class='control-label'>Card Number</label>
-            <input class='form-control' size='40' type='text'>
-          </div>
-        </div>
-        <div class='form-row'>
-          <div class='col-xs-4 form-group cvc required'>
-            <label class='control-label'>CVC</label>
-            <input autocomplete='off' class='form-control card-cvc' placeholder='ex. 311' size='6' type='text'>
-          </div>
-          <div class='col-xs-4 form-group expiration required'>
-            <label class='control-label'>Expiration</label>
-            <input class='form-control card-expiry-month' placeholder='MM' size='6' type='text'>
-          </div>
-          <div class='col-xs-4 form-group expiration required'>
-            <label class='control-label'> </label>
-            <input class='form-control card-expiry-year' placeholder='YYYY' size='7' type='text'>
-          </div>
-        </div>
-        <div class='form-row'>
-          <div class='col-md-12'>
-            <div class='form-control total btn btn-info'>
-              Total:
-              <span class='amount'>Rs. {{ price }}</span>
-            </div>
-          </div>
-        </div>
-        <br>
-        <div class='form-row'>
-          <div class='col-md-12 form-group'>
-            <a href="{% url 'congrats' %}"><button class='form-control btn btn-primary submit-button' type='submit'><i>Pay »</i></button></a>
-          </div>
-        </div>
-      </form> 
-    </div>
+<div class="jumbotron jumbotron-translucent" style="margin: 100px 300px; color: white">
+  <h1 align="center">Payment</h1>
+  <hr>
+  <div align="center" style="color: white;">
+  Enter your card information as asked below to proceed further.
   </div>
+  <br>
+  <form method="post" action="{% url 'payments_page' %}">
+    {% csrf_token %}
+    <div class='form-group required'>
+      <label class='control-label'>Name on Card</label>
+      <input class='form-control textbox-translucent' size='40' type='text'>
+    </div>
+    <div class='form-group required'>
+      <label class='control-label'>Card Number</label>
+      <input class='form-control textbox-translucent' size='40' type='text'>
+    </div>
+    <div class='row' style="margin: auto">
+      <div class='col form-group cvc required'>
+        <label class='control-label'>CVC</label>
+        <input autocomplete='off' class='form-control card-cvc textbox-translucent' placeholder='ex. 311' size='6' type='text'>
+      </div>
+      <div class='col form-group expiration required'>
+        <label class='control-label'>Expiration</label>
+        <input class='form-control card-expiry-month textbox-translucent' placeholder='MM' size='6' type='text'>
+      </div>
+      <div class='col form-group expiration required'>
+        <label class='control-label'> </label>
+        <input class='form-control card-expiry-year textbox-translucent' placeholder='YYYY' size='7' type='text'>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col">
+        <button class='btn btn-lg btn-primary button-translucent' type='submit'><i>Pay »</i></button>
+      </div>
+      <div class="col" align="right">
+        <h3>
+        Total:
+        <i class="fas fa-rupee-sign"></i> <span style="font-size: 50px; font-family: 'Montserrat', sans-serif!important">{{ price }}</span>
+        </h3>
+      </div>
+    </div>
+  </form>
 </div>
 {% endblock %}

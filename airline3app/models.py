@@ -3,68 +3,71 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 # Create your models here.
 
-GENDER_CHOICES = (
-    ('male','MALE'),
-    ('female', 'FEMALE'),
-    ('other','OTHER'),
-)
-
-class ForPass(models.Model):
-    passenger = models.CharField(max_length = 10)
-
 class Route(models.Model):
-    route_no = models.PositiveIntegerField(max_length = 10)
+    route_no = models.AutoField(primary_key=True)
     route_dest = models.CharField(max_length = 100)
     route_src = models.CharField(max_length = 100)
+    class Meta:
+        unique_together = (('route_dest', 'route_src'),)
+
+class Plane(models.Model):
+    flight_code = models.CharField(max_length = 100, primary_key=True)
 
 class FlightDetail(models.Model):
-    flight_no = models.CharField(max_length = 100)
-    route = models.CharField(max_length = 100)
+    flight_code = models.ForeignKey(Plane, on_delete=models.CASCADE)
+    route_no = models.ForeignKey(Route, on_delete=models.CASCADE)
     arrival = models.TimeField()
     departure = models.TimeField(null=True)
-    price = models.PositiveIntegerField(null=True)
-
+    price = models.PositiveIntegerField()
     def get_absolute_url(self):
         return reverse("plane_detail_book",kwargs={'pk': self.pk})
+    class Meta:
+        unique_together = (('flight_code', 'route_no'),)
+
+class Ticket(models.Model):
+    JDate = models.DateField()
+    PNR = models.PositiveIntegerField(primary_key=True)
+    username = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    Date_of_booking = models.DateField()
+    fk_flights = models.ForeignKey(FlightDetail, on_delete=models.CASCADE)
+    def get_absolute_url(self):
+        return reverse("my_tickets",kwargs={'pk': self.PNR})
+
+class Passenger(models.Model):
+    GENDER_CHOICES = (
+        ('male', 'MALE'),
+        ('female', 'FEMALE'),
+        ('other', 'OTHER'),
+    )
+    SSN = models.CharField(max_length=12, primary_key=True)
+    passenger_firstname = models.CharField(max_length = 100)
+    passenger_lastname = models.CharField(max_length = 100)
+    passenger_dob = models.DateField()
+    passenger_gender = models.CharField(max_length=6, choices=GENDER_CHOICES, default='female')
+    def get_absolute_url(self):
+        return reverse("passenger_info", kwargs={'pk': self.pk})
+
+class PassengerTicketRel(models.Model):
+    PNR = models.ForeignKey(Ticket, on_delete=models.CASCADE)
+    SSN = models.ForeignKey(Passenger, on_delete=models.CASCADE)
+    class Meta:
+        unique_together = (('PNR', 'SSN'),)
 
 class UserProfileInfo(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     profile_pic = models.ImageField(upload_to='profile_pics',blank=True)
-
     def __str__(self):
         return self.user.username
-
-class Passengers(models.Model):
-    username = models.ForeignKey(User, null=False, blank=False,on_delete=None)
-    passenger_firstname = models.CharField(max_length = 100)
-    passenger_lastname = models.CharField(max_length = 100)
-    passenger_age = models.PositiveIntegerField()
-    passenger_gender =  models.CharField(max_length=6, choices=GENDER_CHOICES, default='female')
-
-class Tickets(models.Model):
-    username = models.ForeignKey(User, null=False, blank=False,on_delete=None)
-    PNR = models.PositiveIntegerField(unique=True)
-    Date = models.DateField(null=True)
-    price = models.PositiveIntegerField(null=True)
-    dest = models.CharField(max_length = 100,null=True)
-    src = models.CharField(max_length = 100,null=True)
-    arrival = models.TimeField(null=True)
-    departure = models.TimeField(null=True)
-    flight_no =  models.CharField(max_length = 100,null=True)
-    def get_absolute_url(self):
-        return reverse("my_tickets",kwargs={'pk': self.pk})
-
-class DateRoute(models.Model):
-    Date = models.DateField(null=True)
-    Route = models.PositiveIntegerField(max_length = 10,null=True)
-
-class NumPrice(models.Model):
-    flight_no = models.CharField(max_length = 100,null=True)
-    price = models.PositiveIntegerField(null=True)
-
-class TicketHolders(models.Model):
-    PNR = models.PositiveIntegerField()
-    passenger_firstname = models.CharField(max_length = 100)
-    passenger_lastname = models.CharField(max_length = 100)
-    passenger_age = models.PositiveIntegerField()
-    passenger_gender = models.CharField(max_length=6, choices=GENDER_CHOICES, default='female')
+    
+class NoFlightDay(models.Model):
+    DAYS = (
+        ('MON', 'Monday'),
+        ('TUE', 'Tuesday'),
+        ('WED', 'Wednesday'),
+        ('THU', 'Thursday'),
+        ('FRI', 'Friday'),
+        ('SAT', 'Saturday'),
+        ('SUN', 'Sunday'),
+    )
+    Days = models.CharField(null=True, max_length=10, choices=DAYS)
+    fk_flights = models.ForeignKey(FlightDetail, on_delete=models.CASCADE)
