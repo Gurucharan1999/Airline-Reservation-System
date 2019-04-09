@@ -21,8 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.home,name='home'),
     path('about/',views.about,name='about'),
-    path('planes/',views.plane_list,name='plane_list'),
-    path('<int:pk>/',views.plane_detail_book,name='plane_detail_book'),
+    path('index/<slug:pk>/',views.plane_detail_book,name='plane_detail_book'),
     path('airline3app/',include('airline3app.urls')),
     path('index/',views.index,name='index'),
     path('logout/',views.user_logout,name='user_logout'),
@@ -30,6 +29,4 @@ urlpatterns = [
     path('congrats/',views.congrats,name='congrats'),
     path('tickets/',views.ticket_list,name='ticket_list'),
     path('tickets/<int:pk>/',views.my_tickets,name='my_tickets'),
-    path('index/srchsrc/',views.srch_src,name='source'),
-    path('index/srchdst/',views.srch_dst,name='destination'),
 ]

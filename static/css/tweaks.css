@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand:300');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100');
 
 .jumbotron-translucent{
     background-color: #00000029!important;
@@ -6,6 +7,11 @@
     padding: 40px!important;
     border-top-left-radius: 4rem!important;
     border-bottom-right-radius: 4rem!important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: white!important;
+    font-family: 'Quicksand', sans-serif!important;
 }
 
 .nav-dark-translucent{
@@ -34,6 +40,23 @@ input{
 
 .button-translucent:hover{
     background-color: #007bff!important;
+}
+
+.radio-toolbar input[type="radio"] {
+    display: none;
+}
+
+.radio-toolbar label {
+    display: inline-block;
+    background-color: #ddd;
+    padding: 4px 11px;
+    font-family: Arial;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.radio-toolbar input[type="radio"]:checked+label {
+    background-color: #bbb;
 }
 
 hr{ 

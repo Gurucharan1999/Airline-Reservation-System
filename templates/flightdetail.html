@@ -17,12 +17,17 @@
   </script>
 {% endblock %}
 {% block body_block %}
-<div class = "jumbotron">
-  {% if flights %}
-    {% for flights in flights %}
-      <h1> Congratulations for selecting your flight {{ flights.flight_no }}<h1>
-    {% endfor %}
-  {% endif %}
-  <a href="{% url 'airline3app:passenger_info' %}">  <button class = "btn btn-primary btn-lg"type="submit">Proceed To Fill Passenger Details >> </button></a>
+<div class = "jumbotron jumbotron-translucent text-center" style="margin: 100px 80px">
+  <h1>You have selected the flight!</h1>
+  <br>
+  <h1 style="font-size: 100px; font-family: 'Montserrat', sans-serif!important;">{{ flight }}</h1>
+  <br>
+  <form action="{% url 'plane_detail_book' pk=flight %}"method="post">
+    {% csrf_token %}
+    <div class="col form-group">
+      <input type="text" name="number_of_passengers" class="form-control textbox-translucent" style="width: 300px; margin: auto" autocomplete="off" required placeholder="Number of passengers">
+    </div>
+    <button class = "btn btn-primary btn-lg button-translucent" type="submit">Proceed <i class="fas fa-arrow-circle-right"></i></button>
+  </form>
 </div>
 {% endblock %}

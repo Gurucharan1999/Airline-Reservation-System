@@ -9,59 +9,41 @@ table, th, td {
 </style>
 {% endblock %}
 {% block body_block %}
-<div class = 'jumbotron'>
-  <div>
-    {% if ticket %}
-      {% for ticket in ticket %}
-        <h2>PNR: {{ ticket.PNR }}</h1>
-        <h3>Date: {{ ticket.Date }}</h1>
-      {% endfor %}
-    {% endif %}
-  </div>
-  <br>
-  <div class ="src">
-    {% if ticket %}
-      {% for ticket in ticket %}
-        <h1>{{ ticket.src }}</h1>
-        <h2>{{ ticket.arrival }}</h2>
-      {% endfor %}
-    {% endif %}
-  </div>
-  <div class = "dest">
-    {% if ticket %}
-      {% for ticket in ticket %}
-        <h1>{{ ticket.dest }}</h1>
-        <h2>{{ ticket.departure }}</h2>
-      {% endfor %}
-    {% endif %}
+<div class = 'jumbotron jumbotron-translucent' style="margin: 65px 0px 45px 0px; border-radius: 0rem!important;">
+  <div class="row">
+    <div class="col">
+      <h2>PNR: {{ ticket.PNR }}</h1>
+      <h3>Date: {{ ticket.JDate }}</h1>
+    </div>
+    <div class ="col" align="right">
+      <h1>{{ ticket.fk_flights.route_no.route_src }} -- {{ ticket.fk_flights.arrival }}</h1>
+      <h1>{{ ticket.fk_flights.route_no.route_dest }} -- {{ ticket.fk_flights.departure }}</h1>
+    </div>
   </div>
   <br>
   <div>
-    <h2>Boaders:</h2>
-    <table style="width:100%">
+    <h2>Boarders:</h2>
+    <hr>
+    <table style="width: 100%" class="textbox-translucent">
       <tr>
         <th><h2>Name</h2></th>
         <th><h2>Age</h2></th>
         <th><h2>Gender</h2></th>
       </tr>
       {% if passenger %}
-        {% for passenger in passenger %}
+        {% for pass in passenger %}
           <tr>
-            <td><h4>{{ passenger.passenger_firstname }} {{ passenger.passenger_lastname}}</h4></td>
-            <td><h4>{{ passenger.passenger_age }}</h4></td>
-            <td><h4>{{ passenger.passenger_gender }}</h4></td>
+            <td><h4>{{ pass.SSN.passenger_firstname }} {{ pass.SSN.passenger_lastname}}</h4></td>
+            <td><h4>{{ pass.SSN.passenger_dob }}</h4></td>
+            <td><h4>{{ pass.SSN.passenger_gender }}</h4></td>
           </tr>
         {% endfor %}
       {% endif %}
     </table>
   </div>
   <br>
-  <div>
-    {% if ticket %}
-      {% for ticket in ticket %}
-        <h2>Price: Rs.{{ ticket.price }}</h2>
-      {% endfor %}
-    {% endif %}
+  <div align="right">
+    <h1>Price: <i class="fas fa-rupee-sign"></i> {{ t_price }}/-</h1>
   </div>
 </div>
 {% endblock %}
